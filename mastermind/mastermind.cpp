@@ -55,7 +55,13 @@ public:
     }
 
     void risultato_mossa(){
+        int num_ball = 0;
+        int num_strike = 0;
+
         // ... code here ...
+
+        std::cout << "ball: " << num_ball << std::endl;
+        std::cout << "strike: " << num_strike << std::endl;
     }
 
 
