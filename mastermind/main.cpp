@@ -14,15 +14,13 @@ int main(int argc, char const *argv[])
     prova.nuova_giocata();
     prova.risultato_mossa_bis();
 
-    /*
+    
     do{
         prova.nuova_giocata();
         prova.risultato_mossa();
     }while (prova.puoi_continuare());
     
     prova.situazione_finale();
-
-    */
 
     return 0;
 }
