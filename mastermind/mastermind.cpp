@@ -15,33 +15,36 @@ private:
 
     bool hai_vinto;
 
-    bool sanifica_input(){
+    bool sanifica_input()
+    {
         if (DIM_GIOCATA_VALIDA != ultima_mossa.size())
             return false;
         for (int i = 0; i < ultima_mossa.size(); i++)
         {
             char c = ultima_mossa[i];
-            if(c >= '0' && c <= '9')
+            if (c >= '0' && c <= '9')
                 mossa_valida[i] = c - '0';
-            else if(c == '-') // il trattino verra convertio in -1
+            else if (c == '-') // il trattino verra convertio in -1
                 mossa_valida[i] = -1;
             else
-                return false;            
+                return false;
         }
         return true;
     }
 
-    void genera_codice_segreto(){
+    void genera_codice_segreto()
+    {
         srand(time(NULL));
         for (int i = 0; i < DIM_GIOCATA_VALIDA; i++)
         {
             codice_segreto[i] = rand() % 10;
             std::cout << codice_segreto[i];
-        }        
+        }
         std::cout << std::endl;
     }
-            
-    int* copia_vettore(int vettore_originale[]){
+
+    int *copia_vettore(int vettore_originale[])
+    {
 
         static int vettore_copia[DIM_GIOCATA_VALIDA];
 
@@ -49,11 +52,12 @@ private:
         {
             vettore_copia[i] = vettore_originale[i];
         }
-        
+
         return vettore_copia;
     }
 
-    void copia_vettore_bis(int vettore_originale[], int vettore_copia[], int dim_vet){
+    void copia_vettore_bis(int vettore_originale[], int vettore_copia[], int dim_vet)
+    {
         for (int i = 0; i < dim_vet; i++)
         {
             vettore_copia[i] = vettore_originale[i];
@@ -61,24 +65,27 @@ private:
     }
 
 public:
-
-    mastermind(){
+    mastermind()
+    {
         numero_mosse = 0;
         ultima_mossa = "";
         hai_vinto = false;
         genera_codice_segreto();
     };
 
-    void nuova_giocata(){
-        do{
-            std::cout << numero_mosse + 1  << ": ";
+    void nuova_giocata()
+    {
+        do
+        {
+            std::cout << numero_mosse + 1 << ": ";
             std::getline(std::cin, ultima_mossa); // std::cin >> ultima_mossa; <-- non e' in grado di leggere gli spazi
-        }while (!sanifica_input());
-        
+        } while (!sanifica_input());
+
         numero_mosse++;
     }
 
-    void risultato_mossa(){
+    void risultato_mossa()
+    {
         int num_ball = 0;
         int num_strike = 0;
 
@@ -86,8 +93,9 @@ public:
         {
             for (int j = 0; j < DIM_GIOCATA_VALIDA; j++)
             {
-                if(codice_segreto[i] == mossa_valida[j]){
-                    if(i == j)
+                if (codice_segreto[i] == mossa_valida[j])
+                {
+                    if (i == j)
                         num_strike++;
                     else
                         num_ball++;
@@ -95,22 +103,23 @@ public:
             }
         }
 
-        if(num_strike == DIM_GIOCATA_VALIDA)
-            hai_vinto = true;        
+        if (num_strike == DIM_GIOCATA_VALIDA)
+            hai_vinto = true;
 
         std::cout << "ball: " << num_ball << std::endl;
         std::cout << "strike: " << num_strike << std::endl;
     }
 
-    void risultato_mossa_bis(){
+    void risultato_mossa_bis()
+    {
         int strike, ball;
-        strike =0;
+        strike = 0;
         ball = 0;
 
         // Creo una copia del vettore codice_segreto per non andare a sovrascrivere il valore originale
         // vedi riga 125
 
-        //int *codice_segreto_bis = copia_vettore(codice_segreto);
+        // int *codice_segreto_bis = copia_vettore(codice_segreto);
 
         int codice_segreto_bis[DIM_GIOCATA_VALIDA];
         copia_vettore_bis(codice_segreto, codice_segreto_bis, DIM_GIOCATA_VALIDA);
@@ -120,41 +129,46 @@ public:
         {
             for (int j = 0; j < DIM_GIOCATA_VALIDA; j++) // Uso j per iterare su codice_segreto_bis
             {
-                if(mossa_valida[i] == codice_segreto_bis[j]){
-                    if(i == j){
+                if (mossa_valida[i] == codice_segreto_bis[j])
+                {
+                    if (i == j)
+                    {
                         strike++;
-                    }else{
+                    }
+                    else
+                    {
                         ball++;
                     }
                     codice_segreto_bis[j] = -2; // vedi commento riga 107
-                    break; // troviamo il valore che ci serve non abbiamo bisogno di andare oltre
+                    break;                      // troviamo il valore che ci serve non abbiamo bisogno di andare oltre
                 }
             }
-            
         }
 
         // Stampo il risultato della mia ricerca sul terminale
         std::cout << "Il numero di strike e': " << strike << std::endl;
         std::cout << "Il numero di ball e': " << ball << std::endl;
-        
-    }
-    
-    bool puoi_continuare(){
-        
     }
 
-    void situazione_finale(){
-        if(hai_vinto)
+    bool puoi_continuare()
+    {
+        if (hai_vinto || numero_mosse >= NUMERO_MOSSE_CONSENTITE)
+            return false;
+        return true;
+    }
+
+    void situazione_finale()
+    {
+        if (hai_vinto)
             std::cout << "Hai vinto in " << numero_mosse << " mosse!" << std::endl;
-        else{
+        else
+        {
             std::cout << "Hai perso, il codice segreto e': ";
             for (id_t i = 0; i < DIM_GIOCATA_VALIDA; i++)
             {
                 std::cout << codice_segreto[i];
             }
             std::cout << std::endl;
-        }   
+        }
     }
-
-
 };
