@@ -127,7 +127,7 @@ public:
                         ball++;
                     }
                     codice_segreto_bis[j] = -2; // vedi commento riga 107
-                    break;
+                    break; // troviamo il valore che ci serve non abbiamo bisogno di andare oltre
                 }
             }
             
