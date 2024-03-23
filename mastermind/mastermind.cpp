@@ -143,6 +143,7 @@ public:
         if(hai_vinto || numero_mosse >= NUMERO_MOSSE_CONSENTITE)
             return false;
         return true;
+
     }
 
     void situazione_finale(){
@@ -155,8 +156,7 @@ public:
                 std::cout << codice_segreto[i];
             }
             std::cout << std::endl;
-        }
-            
+        }            
     }
 
 
