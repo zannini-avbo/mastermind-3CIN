@@ -140,22 +140,10 @@ public:
     }
     
     bool puoi_continuare(){
-        if(hai_vinto || numero_mosse >= NUMERO_MOSSE_CONSENTITE)
-            return false;
-        return true;
+        
     }
 
     void situazione_finale(){
-        if(hai_vinto)
-            std::cout << "Hai vinto in " << numero_mosse << " mosse!" << std::endl;
-        else{
-            std::cout << "Hai perso, il codice segreto e': ";
-            for (id_t i = 0; i < DIM_GIOCATA_VALIDA; i++)
-            {
-                std::cout << codice_segreto[i];
-            }
-            std::cout << std::endl;
-        }
             
     }
 
