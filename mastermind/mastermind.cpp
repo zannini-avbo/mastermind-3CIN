@@ -36,9 +36,29 @@ private:
         for (int i = 0; i < DIM_GIOCATA_VALIDA; i++)
         {
             codice_segreto[i] = rand() % 10;
+            std::cout << codice_segreto[i];
         }        
+        std::cout << std::endl;
     }
             
+    int* copia_vettore(int vettore_originale[]){
+
+        static int vettore_copia[DIM_GIOCATA_VALIDA];
+
+        for (int i = 0; i < DIM_GIOCATA_VALIDA; i++)
+        {
+            vettore_copia[i] = vettore_originale[i];
+        }
+        
+        return vettore_copia;
+    }
+
+    void copia_vettore_bis(int vettore_originale[], int vettore_copia[], int dim_vet){
+        for (int i = 0; i < dim_vet; i++)
+        {
+            vettore_copia[i] = vettore_originale[i];
+        }
+    }
 
 public:
 
@@ -82,6 +102,43 @@ public:
         std::cout << "strike: " << num_strike << std::endl;
     }
 
+    void risultato_mossa_bis(){
+        int strike, ball;
+        strike =0;
+        ball = 0;
+
+        // Creo una copia del vettore codice_segreto per non andare a sovrascrivere il valore originale
+        // vedi riga 125
+
+        //int *codice_segreto_bis = copia_vettore(codice_segreto);
+
+        int codice_segreto_bis[DIM_GIOCATA_VALIDA];
+        copia_vettore_bis(codice_segreto, codice_segreto_bis, DIM_GIOCATA_VALIDA);
+
+        // Cerco quanti strike e quanti ball
+        for (int i = 0; i < DIM_GIOCATA_VALIDA; i++) // Uso i per iterare su mossa_valida
+        {
+            for (int j = 0; j < DIM_GIOCATA_VALIDA; j++) // Uso j per iterare su codice_segreto_bis
+            {
+                if(mossa_valida[i] == codice_segreto_bis[j]){
+                    if(i == j){
+                        strike++;
+                    }else{
+                        ball++;
+                    }
+                    codice_segreto_bis[j] = -2; // vedi commento riga 107
+                    break;
+                }
+            }
+            
+        }
+
+        // Stampo il risultato della mia ricerca sul terminale
+        std::cout << "Il numero di strike e': " << strike << std::endl;
+        std::cout << "Il numero di ball e': " << ball << std::endl;
+        
+    }
+    
     bool puoi_continuare(){
         if(hai_vinto || numero_mosse >= NUMERO_MOSSE_CONSENTITE)
             return false;
